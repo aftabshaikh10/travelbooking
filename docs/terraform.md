@@ -199,7 +199,7 @@ Now that the network infrastructure is ready, create the GKE cluster manually:
 1. Go to **Google Cloud Console** → **Kubernetes Engine** → **Clusters**
 2. Click **Create**
 3. Choose **Standard** cluster (not Autopilot)
-4. **Cluster name:** any name (e.g., `test-cluster`)
+4. **Cluster name:** any name (e.g., `travelbooking-cluster`)
 5. **Location:** Zonal → `us-central1-a`
 6. **Network settings:**
    - Network: `travelbooking-vpc` (created by Terraform)
