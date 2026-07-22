@@ -1,7 +1,7 @@
 controller:
   admin:
-    username: "vijay"
-    password: "vijay@123"
+    username: "aftab"
+    password: "Aftab@135"
 
   JCasC:
     securityRealm: |
@@ -9,9 +9,9 @@ controller:
         allowsSignup: false
         enableCaptcha: false
         users:
-          - id: "vijay"
-            name: "vijay"
-            password: "vijay@123"
+          - id: "aftab"
+            name: "aftab"
+            password: "Aftab@135"
 
     authorizationStrategy: |
       loggedInUsersCanDoAnything:
@@ -124,7 +124,7 @@ controller:
     - build-timeout:latest
 
   javaOpts: -Xms2000m -Xmx2000m
-  jenkinsUrl: "http://vijaygiduthuri.in/jenkins/"
+  jenkinsUrl: "http://cloudstech.online/jenkins/"
   jenkinsUriPrefix: "/jenkins"
   resources:
     limits:
