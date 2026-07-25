@@ -17,7 +17,7 @@ HTTPS encrypts all traffic between the user's browser and your server. Without i
 - **How it works:** cert-manager requests a certificate from Let's Encrypt, proves you own the domain via HTTP challenge, gets the certificate, and stores it as a Kubernetes Secret. The Gateway uses this Secret to serve HTTPS.
 
 ```
-Browser (https://vijaygiduthuri.in)
+Browser (https://cloudstech.online)
     │
     ▼ (TLS encrypted)
 ┌──────────────────────────┐
@@ -40,7 +40,7 @@ Before starting, make sure:
 1. **TravelBooking app is deployed** on GKE with the Gateway running
 2. **DNS is configured** — your domain points to the Gateway static IP
 3. **Gateway has `allowedRoutes.namespaces.from: All`** set
-4. **HTTP access works** — `http://vijaygiduthuri.in` loads the application
+4. **HTTP access works** — `http://cloudstech.online` loads the application
 5. **Helm is installed** on your local machine
 
 ---
@@ -137,7 +137,7 @@ spec:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - vijaygiduthuri.in
+  - cloudstech.online
 EOF
 ```
 
@@ -145,7 +145,7 @@ EOF
 
 1. cert-manager creates a CertificateRequest
 2. It creates an HTTP01 challenge — a temporary pod + service + HTTPRoute
-3. Let's Encrypt sends a request to `http://vijaygiduthuri.in/.well-known/acme-challenge/xxxxx`
+3. Let's Encrypt sends a request to `http://cloudstech.online/.well-known/acme-challenge/xxxxx`
 4. The temporary HTTPRoute routes this to the solver pod which responds with the challenge token
 5. Let's Encrypt verifies the response and issues the certificate
 6. cert-manager stores the certificate in a Kubernetes Secret called `travel-booking-tls-secret`
@@ -190,14 +190,14 @@ spec:
   - name: http
     port: 80
     protocol: HTTP
-    hostname: vijaygiduthuri.in
+    hostname: cloudstech.online
     allowedRoutes:
       namespaces:
         from: All
   - name: https
     port: 443
     protocol: HTTPS
-    hostname: vijaygiduthuri.in
+    hostname: cloudstech.online
     tls:
       mode: Terminate
       certificateRefs:
@@ -220,7 +220,7 @@ EOF
 
 ## Step 5: HTTP → HTTPS Redirect (Optional)
 
-After HTTPS is working, you can redirect all HTTP traffic to HTTPS automatically. This means if a user visits `http://vijaygiduthuri.in`, they are automatically redirected to `https://vijaygiduthuri.in`.
+After HTTPS is working, you can redirect all HTTP traffic to HTTPS automatically. This means if a user visits `http://cloudstech.online`, they are automatically redirected to `https://cloudstech.online`.
 
 Create an HTTPRoute with a redirect filter:
 
@@ -237,7 +237,7 @@ spec:
     namespace: travel-booking
     sectionName: http
   hostnames:
-  - vijaygiduthuri.in
+  - cloudstech.online
   rules:
   - filters:
     - type: RequestRedirect
@@ -251,17 +251,17 @@ EOF
 - `sectionName: http` — this route only attaches to the HTTP listener (port 80), not HTTPS
 - `RequestRedirect` filter — redirects every HTTP request to HTTPS
 - `statusCode: 301` — permanent redirect (browsers cache this, good for SEO)
-- After applying, `http://vijaygiduthuri.in/search` automatically becomes `https://vijaygiduthuri.in/search`
+- After applying, `http://cloudstech.online/search` automatically becomes `https://cloudstech.online/search`
 
 **Verify:**
 ```bash
 # Test HTTP redirect (should return 301 with Location header pointing to HTTPS)
-curl -s -o /dev/null -w "HTTP %{http_code}\n" http://vijaygiduthuri.in/
+curl -s -o /dev/null -w "HTTP %{http_code}\n" http://cloudstech.online/
 # Expected: HTTP 301
 
 # Check the redirect location
-curl -sI http://vijaygiduthuri.in/ | grep -i location
-# Expected: location: https://vijaygiduthuri.in/
+curl -sI http://cloudstech.online/ | grep -i location
+# Expected: location: https://cloudstech.online/
 ```
 
 > **Note:** After applying this redirect, all HTTP traffic goes to HTTPS. The only exception is the `/.well-known/acme-challenge/` path used by cert-manager for certificate renewal — cert-manager creates its own temporary HTTPRoute with higher priority during renewal, so auto-renewal still works.
@@ -276,20 +276,20 @@ Wait **3-5 minutes** for the GCP load balancer to program the HTTPS listener, th
 
 ```bash
 # Test HTTPS
-curl -sk -o /dev/null -w "HTTPS Frontend: %{http_code}\n" https://vijaygiduthuri.in/
-curl -sk -o /dev/null -w "HTTPS API:      %{http_code}\n" "https://vijaygiduthuri.in/api/search/flights?from=NYC&to=LAX"
-curl -sk -o /dev/null -w "HTTPS Jenkins:  %{http_code}\n" https://vijaygiduthuri.in/jenkins/login
-curl -sk -o /dev/null -w "HTTPS Grafana:  %{http_code}\n" https://vijaygiduthuri.in/grafana/
+curl -sk -o /dev/null -w "HTTPS Frontend: %{http_code}\n" https://cloudstech.online/
+curl -sk -o /dev/null -w "HTTPS API:      %{http_code}\n" "https://cloudstech.online/api/search/flights?from=NYC&to=LAX"
+curl -sk -o /dev/null -w "HTTPS Jenkins:  %{http_code}\n" https://cloudstech.online/jenkins/login
+curl -sk -o /dev/null -w "HTTPS Grafana:  %{http_code}\n" https://cloudstech.online/grafana/
 
 # Check TLS certificate details
-curl -svk https://vijaygiduthuri.in/ 2>&1 | grep -E "subject:|issuer:|expire"
+curl -svk https://cloudstech.online/ 2>&1 | grep -E "subject:|issuer:|expire"
 # Expected:
-# subject: CN=vijaygiduthuri.in
+# subject: CN=cloudstech.online
 # issuer: C=US; O=Let's Encrypt; CN=R13
 # expire date: <3 months from now>
 ```
 
-Open in browser: **`https://vijaygiduthuri.in`** — you should see the padlock icon.
+Open in browser: **`https://cloudstech.online`** — you should see the padlock icon.
 
 ---
 
@@ -328,7 +328,7 @@ helm install cert-manager jetstack/cert-manager \
 kubectl apply -f https-clusterissuer.yaml
 
 # ─── Step 3: Create Certificate ───────────────────────────────────────────────
-# Replace vijaygiduthuri.in with your domain
+# Replace cloudstech.online with your domain
 kubectl apply -f https-certificate.yaml
 
 # Wait for certificate to be ready (2-5 minutes)
@@ -342,8 +342,8 @@ kubectl apply -f https-redirect.yaml
 
 # ─── Step 6: Verify ───────────────────────────────────────────────────────────
 # Note: HTTPRoutes must have hostnames set (already done in gateway-api-dns-guide.md)
-curl -sk https://vijaygiduthuri.in/
-curl -s -o /dev/null -w "%{http_code}" http://vijaygiduthuri.in/   # Should return 301
+curl -sk https://cloudstech.online/
+curl -s -o /dev/null -w "%{http_code}" http://cloudstech.online/   # Should return 301
 ```
 
 ---
@@ -377,7 +377,7 @@ kubectl describe challenge -n travel-booking
 ```
 
 Common causes:
-- **DNS not pointing to Gateway IP** — verify with `dig vijaygiduthuri.in +short`
+- **DNS not pointing to Gateway IP** — verify with `dig cloudstech.online +short`
 - **Gateway API not enabled in cert-manager** — check `enableGatewayAPI=true` is set
 - **GCP LB slow to program** — wait 5 minutes for the challenge HTTPRoute to work
 
