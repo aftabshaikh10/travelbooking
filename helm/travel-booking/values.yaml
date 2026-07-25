@@ -79,7 +79,7 @@ redis:
 # ─── Gateway ──────────────────────────────────────────────────────────────────
 gateway:
   name: travel-booking-gateway
-  domain: vijaygiduthuri.in
+  domain: cloudstech.online
   staticIPName: travel-booking-ip
   certificateName: travel-booking-cert
 
