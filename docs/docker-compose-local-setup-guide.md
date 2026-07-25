@@ -154,7 +154,7 @@ sudo lsof -i :8080
 
 ```bash
 git clone https://github.com/aftabshaikh/travelbooking.git
-cd travelbooking-app
+cd travelbooking
 ```
 
 Or if you already have the code:
