@@ -162,7 +162,7 @@ curl -s http://$GATEWAY_IP/api/search/flights?from=NYC&to=LAX
 
 ---
 
-## Configure Custom Domain: vijaygiduthuri.in
+## Configure Custom Domain: cloudstech.online
 
 ### Step 1: Get the Gateway IP Address
 
@@ -176,7 +176,7 @@ Note down this IP address. For example: `<GATEWAY_IP>`
 
 1. **Login to GoDaddy** → [https://dcc.godaddy.com](https://dcc.godaddy.com)
 
-2. Go to **My Products** → Find **vijaygiduthuri.in** → Click **DNS**
+2. Go to **My Products** → Find **cloudstech.online** → Click **DNS**
 
 3. **Add or update these DNS records:**
 
@@ -186,7 +186,7 @@ Note down this IP address. For example: `<GATEWAY_IP>`
 |------|------|-------|-----|
 | **A** | `@` | `<GATEWAY_IP>` | 600 |
 
-This maps `vijaygiduthuri.in` → Gateway IP
+This maps `cloudstech.online` → Gateway IP
 
 #### Option B: Use Subdomain (travel.cloudstech.online)
 
@@ -194,7 +194,7 @@ This maps `vijaygiduthuri.in` → Gateway IP
 |------|------|-------|-----|
 | **A** | `travel` | `<GATEWAY_IP>` | 600 |
 
-This maps `travel.vijaygiduthuri.in` → Gateway IP
+This maps `travel.cloudstech.online` → Gateway IP
 
 #### Option C: Use Both (Recommended)
 
@@ -213,9 +213,9 @@ DNS changes take **5 to 30 minutes** to propagate worldwide. You can check the s
 
 ```bash
 # Check if DNS is pointing to your IP
-nslookup vijaygiduthuri.in
+nslookup cloudstech.online
 # or
-dig vijaygiduthuri.in +short
+dig cloudstech.online +short
 ```
 
 Expected output should show your Gateway IP.
@@ -326,7 +326,7 @@ spec:
   - name: travel-booking-gateway
     namespace: travel-booking
   hostnames:
-  - vijaygiduthuri.in
+  - cloudstech.online
   rules:
   - matches:
     - path:
@@ -346,7 +346,7 @@ spec:
   - name: travel-booking-gateway
     namespace: travel-booking
   hostnames:
-  - vijaygiduthuri.in
+  - cloudstech.online
   rules:
   - matches:
     - path:
@@ -516,7 +516,7 @@ kubectl get gateway -n travel-booking
 # Check all HTTPRoutes (both namespaces)
 kubectl get httproute -n travel-booking
 kubectl get httproute -n default
-# HOSTNAMES column should show vijaygiduthuri.in for each route
+# HOSTNAMES column should show cloudstech.online for each route
 
 # Test frontend
 curl -s -o /dev/null -w "%{http_code}" http://cloudstech.online/
@@ -637,7 +637,7 @@ Step 4: Configure DNS (This Guide)
     └── Get Gateway IP → Add A record on GoDaddy → Verify
          │
 Step 5: Access Application
-    └── http://vijaygiduthuri.in
+    └── http://cloudstech.online
 ```
 
 ---
