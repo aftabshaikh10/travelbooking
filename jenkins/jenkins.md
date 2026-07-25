@@ -159,8 +159,8 @@ kubectl get nodes -o wide | awk '{print $7}' | tail -1
 Access Jenkins at: `http://<NODE_EXTERNAL_IP>:<NODE_PORT>/jenkins`
 
 **Login credentials:**
-- Username: `vijay`
-- Password: `vijay@123`
+- Username: `aftab`
+- Password: `Aftab@135`
 
 ---
 
