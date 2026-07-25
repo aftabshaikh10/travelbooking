@@ -91,7 +91,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: vijaygiduthuri@gmail.com
+    email: aftabshaih1224@gmail.com
     privateKeySecretRef:
       name: letsencrypt-prod-key
     solvers:
