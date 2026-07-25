@@ -153,18 +153,18 @@ sudo lsof -i :8080
 ## Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/vijaygiduthuri/travelbooking-app.git
+git clone https://github.com/aftabshaikh10/travelbooking.git
 cd travelbooking-app
 ```
 
 Or if you already have the code:
 ```bash
-cd /path/to/travelbooking_app
+cd /path/to/travelbooking
 ```
 
 ---
 
-## Step 2: Start the Application
+## Step 2: Start the Applicationi
 
 ```bash
 docker compose up -d --build
