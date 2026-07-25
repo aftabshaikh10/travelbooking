@@ -216,7 +216,7 @@ After logging in, you need to add GCP credentials so Jenkins can push images and
 1. Scroll down to **Pipeline** section
 2. Select **Pipeline script from SCM**
 3. **SCM:** Git
-4. **Repository URL:** `https://github.com/vijaygiduthuri/travelbooking-app.git`
+4. **Repository URL:** `https://github.com/aftabshaikh10/travelbooking-app.git`
 5. **Branch:** `*/main`
 6. **Script Path:** `Jenkinsfile`
 7. Click **Save**
