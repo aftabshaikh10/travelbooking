@@ -482,6 +482,6 @@ docker network inspect travelbooking_app_travel-booking-network
 | **Cache** | Single Redis container | Redis Deployment |
 | **Scaling** | Single instance per service | HPA autoscaling (1-5 replicas) |
 | **SSL/TLS** | None (HTTP only) | Google-managed certificate |
-| **Domain** | localhost | vijaygiduthuri.in |
+| **Domain** | localhost | cloudstech.online|
 | **Monitoring** | Docker stats / logs | Prometheus + Grafana |
 | **CI/CD** | Manual `docker compose up` | Jenkins pipeline |
