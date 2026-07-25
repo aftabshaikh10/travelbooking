@@ -271,8 +271,8 @@ kubectl get gateway -n travel-booking
 
 | Setting | Value | Why |
 |---------|-------|-----|
-| `admin.username` | vijay | Jenkins admin login |
-| `admin.password` | vijay@123 | Jenkins admin password |
+| `admin.username` | aftab| Jenkins admin login |
+| `admin.password` | Aftab@135 | Jenkins admin password |
 | `jenkinsUriPrefix` | /jenkins | Access Jenkins at `/jenkins` path |
 | `serviceType` | NodePort | Exposes Jenkins on a node port |
 | `persistence.size` | 15Gi | Storage for Jenkins data and plugins |
@@ -494,7 +494,7 @@ Open in browser: **`http://<DOMAIN_NAME>/jenkins`**
 
 Login with:
 - **Username:** `vijay`
-- **Password:** `vijay@123`
+- **Password:** `Aftab@135`
 
 ### Summary
 
