@@ -206,7 +206,7 @@ helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack \
 | `alertmanager...externalUrl` | Tells Alertmanager its external URL is at `/alertmanager` |
 | `alertmanager...routePrefix=/alertmanager` | Serves Alertmanager UI at `/alertmanager` instead of `/` |
 
-> **Note:** Replace `<DOMAIN_NAME>` with your actual domain (e.g., `vijaygiduthuri.in`). If you don't have a domain yet, remove the Grafana `root_url`, `serve_from_sub_path`, `externalUrl`, and `routePrefix` flags — you can add them later when setting up domain access.
+> **Note:** Replace `<DOMAIN_NAME>` with your actual domain (e.g., `cloudstech.online`). If you don't have a domain yet, remove the Grafana `root_url`, `serve_from_sub_path`, `externalUrl`, and `routePrefix` flags — you can add them later when setting up domain access.
 
 **What this does:**
 - `kube-prometheus-stack` is the release name
@@ -879,7 +879,7 @@ spec:
   - name: travel-booking-gateway
     namespace: travel-booking
   hostnames:
-  - vijaygiduthuri.in
+  - cloudstech.online
   rules:
   - matches:
     - path:
@@ -899,7 +899,7 @@ spec:
   - name: travel-booking-gateway
     namespace: travel-booking
   hostnames:
-  - vijaygiduthuri.in
+  - cloudstech.online
   rules:
   - matches:
     - path:
@@ -919,7 +919,7 @@ spec:
   - name: travel-booking-gateway
     namespace: travel-booking
   hostnames:
-  - vijaygiduthuri.in
+  - cloudstech.online
   rules:
   - matches:
     - path:
