@@ -1,6 +1,6 @@
 # TravelBooking — Gateway API & DNS Configuration Guide
 
-This guide explains the GKE Gateway API setup, how the Helm chart creates the Gateway and HTTPRoutes, and how to connect your custom domain **vijaygiduthuri.in** via GoDaddy DNS.
+This guide explains the GKE Gateway API setup, how the Helm chart creates the Gateway and HTTPRoutes, and how to connect your custom domain **cloudstech.online** via GoDaddy DNS.
 
 ---
 
@@ -180,7 +180,7 @@ Note down this IP address. For example: `<GATEWAY_IP>`
 
 3. **Add or update these DNS records:**
 
-#### Option A: Use Root Domain (vijaygiduthuri.in)
+#### Option A: Use Root Domain (cloudstech.online)
 
 | Type | Name | Value | TTL |
 |------|------|-------|-----|
@@ -188,7 +188,7 @@ Note down this IP address. For example: `<GATEWAY_IP>`
 
 This maps `vijaygiduthuri.in` → Gateway IP
 
-#### Option B: Use Subdomain (travel.vijaygiduthuri.in)
+#### Option B: Use Subdomain (travel.cloudstech.online)
 
 | Type | Name | Value | TTL |
 |------|------|-------|-----|
@@ -226,21 +226,21 @@ Once DNS propagates:
 
 ```bash
 # Test the website
-curl -s -o /dev/null -w "%{http_code}" http://vijaygiduthuri.in/
+curl -s -o /dev/null -w "%{http_code}" http://cloudstech.online/
 # Expected: 200
 
 # Test API
-curl -s http://vijaygiduthuri.in/api/search/flights?from=NYC&to=LAX
+curl -s http://cloudstech.online/api/search/flights?from=NYC&to=LAX
 # Expected: JSON response
 ```
 
-Open in browser: **http://vijaygiduthuri.in**
+Open in browser: **http://cloudstech.online**
 
 ---
 
 ## Step 5: Update Gateway & HTTPRoutes with Domain Name
 
-After DNS is pointing to the Gateway IP and you can verify with `dig vijaygiduthuri.in +short`, you need to update the Gateway and all HTTPRoutes to use the domain name. This is important because:
+After DNS is pointing to the Gateway IP and you can verify with `dig cloudstech.online +short`, you need to update the Gateway and all HTTPRoutes to use the domain name. This is important because:
 
 - **Gateway** — needs the domain in the listener so it correctly routes traffic for your domain
 - **HTTPRoutes** — need the `hostnames` field so the Gateway only accepts traffic from your domain (security best practice)
@@ -248,7 +248,7 @@ After DNS is pointing to the Gateway IP and you can verify with `dig vijaygiduth
 ### Why is this needed?
 
 Without updating, the Gateway accepts requests from **any hostname** (including the raw IP). After updating:
-- Only requests to `vijaygiduthuri.in` are accepted
+- Only requests to `cloudstech.online` are accepted
 - Raw IP access will show "fault filter abort" (expected — forces users to use the domain)
 
 ### 5a. Update the Gateway
@@ -277,7 +277,7 @@ spec:
   - name: http
     port: 80
     protocol: HTTP
-    hostname: vijaygiduthuri.in
+    hostname: cloudstech.online
     allowedRoutes:
       namespaces:
         from: All
@@ -285,7 +285,7 @@ EOF
 ```
 
 **What changed:**
-- Added `hostname: vijaygiduthuri.in` to the HTTP listener — now it only accepts requests with this domain
+- Added `hostname: cloudstech.online` to the HTTP listener — now it only accepts requests with this domain
 - Changed `allowedRoutes.namespaces.from` to `All` — this allows HTTPRoutes from **any namespace** (needed because Jenkins runs in `default` namespace while the app runs in `travel-booking` namespace)
 - Requests via raw IP will get "fault filter abort" (expected — forces users to use the domain)
 
@@ -306,7 +306,7 @@ spec:
   - name: travel-booking-gateway
     namespace: travel-booking
   hostnames:
-  - vijaygiduthuri.in
+  - cloudstech.online
   rules:
   - matches:
     - path:
@@ -366,7 +366,7 @@ spec:
   - name: travel-booking-gateway
     namespace: travel-booking
   hostnames:
-  - vijaygiduthuri.in
+  - cloudstech.online
   rules:
   - matches:
     - path:
@@ -386,7 +386,7 @@ spec:
   - name: travel-booking-gateway
     namespace: travel-booking
   hostnames:
-  - vijaygiduthuri.in
+  - cloudstech.online
   rules:
   - matches:
     - path:
@@ -406,7 +406,7 @@ spec:
   - name: travel-booking-gateway
     namespace: travel-booking
   hostnames:
-  - vijaygiduthuri.in
+  - cloudstech.online
   rules:
   - matches:
     - path:
@@ -419,7 +419,7 @@ EOF
 ```
 
 **What changed in each HTTPRoute:**
-- Added `hostnames: [vijaygiduthuri.in]` — the route now only matches requests coming through your domain
+- Added `hostnames: [cloudstech.online]` — the route now only matches requests coming through your domain
 
 ### 5c. Configure Jenkins Gateway Access
 
@@ -474,7 +474,7 @@ spec:
   - name: travel-booking-gateway
     namespace: travel-booking
   hostnames:
-  - vijaygiduthuri.in
+  - cloudstech.online
   rules:
   - matches:
     - path:
@@ -487,7 +487,7 @@ EOF
 ```
 
 **What this does:**
-- Routes all requests to `http://vijaygiduthuri.in/jenkins/*` to the Jenkins service on port 8080
+- Routes all requests to `http://cloudstech.online/jenkins/*` to the Jenkins service on port 8080
 - The HTTPRoute lives in the `default` namespace (same as Jenkins)
 - It references the Gateway in `travel-booking` namespace via `parentRefs`
 - This works because we set `allowedRoutes.namespaces.from: All` in the Gateway
@@ -502,7 +502,7 @@ kubectl get httproute jenkins-httproute -n default
 kubectl get healthcheckpolicy -n default
 
 # Test Jenkins access via domain (after DNS is configured)
-curl -s -o /dev/null -w "%{http_code}" http://vijaygiduthuri.in/jenkins/login
+curl -s -o /dev/null -w "%{http_code}" http://cloudstech.online/jenkins/login
 # Expected: 200
 ```
 
@@ -519,15 +519,15 @@ kubectl get httproute -n default
 # HOSTNAMES column should show vijaygiduthuri.in for each route
 
 # Test frontend
-curl -s -o /dev/null -w "%{http_code}" http://vijaygiduthuri.in/
+curl -s -o /dev/null -w "%{http_code}" http://cloudstech.online/
 # Expected: 200
 
 # Test API
-curl -s http://vijaygiduthuri.in/api/search/flights?from=NYC&to=LAX
+curl -s http://cloudstech.online/api/search/flights?from=NYC&to=LAX
 # Expected: JSON response with flights
 
 # Test Jenkins
-curl -s -o /dev/null -w "%{http_code}" http://vijaygiduthuri.in/jenkins/login
+curl -s -o /dev/null -w "%{http_code}" http://cloudstech.online/jenkins/login
 # Expected: 200
 
 # Verify raw IP no longer works (expected — domain is required now)
@@ -541,13 +541,13 @@ curl -s -o /dev/null -w "%{http_code}" http://<GATEWAY_IP>/
 |---|--------|---------------|
 | 1 | Get Gateway IP | `kubectl get gateway -n travel-booking` |
 | 2 | Add A record on GoDaddy | GoDaddy DNS → `@` → Gateway IP |
-| 3 | Wait for DNS propagation | `dig vijaygiduthuri.in +short` |
+| 3 | Wait for DNS propagation | `dig cloudstech.online +short` |
 | 4 | Update Gateway with domain + `from: All` | `kubectl apply -f` (Gateway YAML above) |
 | 5 | Update all app HTTPRoutes with hostname | `kubectl apply -f` (6 HTTPRoutes above) |
 | 6 | Apply Jenkins HealthCheckPolicy | `kubectl apply -f` (HealthCheckPolicy above) |
 | 7 | Apply Jenkins HTTPRoute | `kubectl apply -f` (Jenkins HTTPRoute above) |
-| 8 | Verify HTTP works | `curl http://vijaygiduthuri.in/` |
-| 9 | Verify Jenkins works | `curl http://vijaygiduthuri.in/jenkins/login` |
+| 8 | Verify HTTP works | `curl http://cloudstech.online/` |
+| 9 | Verify Jenkins works | `curl http://cloudstech.online/jenkins/login` |
 
 ---
 
@@ -559,48 +559,48 @@ Once DNS is configured, you can access the application at:
 
 | URL | Description |
 |-----|-------------|
-| `http://vijaygiduthuri.in/` | Home page (redirects to search) |
-| `http://vijaygiduthuri.in/login` | Login page |
-| `http://vijaygiduthuri.in/register` | Registration page |
-| `http://vijaygiduthuri.in/search` | Search flights and hotels |
-| `http://vijaygiduthuri.in/booking-summary` | Booking review page |
-| `http://vijaygiduthuri.in/payment` | Payment page |
-| `http://vijaygiduthuri.in/my-trips` | View all bookings |
+| `http://cloudstech.online/` | Home page (redirects to search) |
+| `http://cloudstech.online/login` | Login page |
+| `http://cloudstech.online/register` | Registration page |
+| `http://cloudstech.online/search` | Search flights and hotels |
+| `http://cloudstech.online/booking-summary` | Booking review page |
+| `http://cloudstech.online/payment` | Payment page |
+| `http://cloudstech.online/my-trips` | View all bookings |
 
 ### Jenkins (CI/CD)
 
 | URL | Description |
 |-----|-------------|
-| `http://vijaygiduthuri.in/jenkins/` | Jenkins dashboard |
-| `http://vijaygiduthuri.in/jenkins/login` | Jenkins login page |
-| `http://vijaygiduthuri.in/jenkins/blue` | Blue Ocean pipeline UI |
+| `http://cloudstech.online/jenkins/` | Jenkins dashboard |
+| `http://cloudstech.online/jenkins/login` | Jenkins login page |
+| `http://cloudstech.online/jenkins/blue` | Blue Ocean pipeline UI |
 
 ### API Endpoints (Backend Services)
 
 | Service | Base URL | Key Endpoints |
 |---------|----------|---------------|
-| **User Service** | `http://vijaygiduthuri.in/api/users` | |
+| **User Service** | `http://cloudstech.online/api/users` | |
 | | `POST /api/users/register` | Register a new user |
 | | `POST /api/users/login` | Login and get JWT token |
 | | `GET /api/users/profile` | Get user profile (auth required) |
 | | `PUT /api/users/profile` | Update user profile (auth required) |
-| **Search Service** | `http://vijaygiduthuri.in/api/search` | |
+| **Search Service** | `http://cloudstech.online/api/search` | |
 | | `GET /api/search/flights?from=NYC&to=LAX` | Search flights |
 | | `GET /api/search/flights/:id` | Get flight by ID |
 | | `GET /api/search/hotels?city=Paris` | Search hotels |
 | | `GET /api/search/hotels/:id` | Get hotel by ID |
-| **Booking Service** | `http://vijaygiduthuri.in/api/bookings` | |
+| **Booking Service** | `http://cloudstech.online/api/bookings` | |
 | | `POST /api/bookings/flight` | Book a flight (auth required) |
 | | `POST /api/bookings/hotel` | Book a hotel (auth required) |
 | | `GET /api/bookings/user/:userId` | Get user's bookings (auth required) |
 | | `GET /api/bookings/:bookingId` | Get booking details (auth required) |
 | | `PUT /api/bookings/:bookingId/cancel` | Cancel a booking (auth required) |
-| **Payment Service** | `http://vijaygiduthuri.in/api/payments` | |
+| **Payment Service** | `http://cloudstech.online/api/payments` | |
 | | `POST /api/payments/process` | Process a payment (auth required) |
 | | `GET /api/payments/:paymentId` | Get payment details (auth required) |
 | | `GET /api/payments/booking/:bookingId` | Get payment by booking (auth required) |
 | | `POST /api/payments/refund` | Refund a payment (auth required) |
-| **Notification Service** | `http://vijaygiduthuri.in/api/notifications` | |
+| **Notification Service** | `http://cloudstech.online/api/notifications` | |
 | | `GET /api/notifications/user/:userId` | Get user notifications |
 | | `PUT /api/notifications/:id/read` | Mark notification as read |
 
@@ -608,7 +608,7 @@ Once DNS is configured, you can access the application at:
 
 | URL | Service |
 |-----|---------|
-| `http://vijaygiduthuri.in/api/users/../health` | User Service |
+| `http://cloudstech.online/api/users/../health` | User Service |
 | Direct pod: `user-service-service:3001/health` | User Service |
 | Direct pod: `search-service-service:3002/health` | Search Service |
 | Direct pod: `booking-service-service:3003/health` | Booking Service |
@@ -678,7 +678,7 @@ kubectl logs -n travel-booking deployment/<service-name>-deployment
 Check if DNS has propagated:
 
 ```bash
-dig vijaygiduthuri.in +short
+dig cloudstech.online +short
 ```
 
 If it shows nothing, wait 15-30 minutes. GoDaddy DNS can be slow to update.
@@ -688,7 +688,7 @@ If it shows nothing, wait 15-30 minutes. GoDaddy DNS can be slow to update.
 Check if the API routes are healthy:
 
 ```bash
-curl -v http://vijaygiduthuri.in/api/search/flights?from=NYC&to=LAX
+curl -v http://cloudstech.online/api/search/flights?from=NYC&to=LAX
 ```
 
 If you get 503, the backend service health check is failing. Check:
