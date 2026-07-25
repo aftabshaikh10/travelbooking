@@ -22,7 +22,7 @@ pipeline {
         stage('Git Clone') {
             steps {
                 container('docker') {
-                    git branch: 'main', credentialsId: 'github-pat', url: 'https://github.com/vijaygiduthuri/travelbooking.git'
+                    git branch: 'main', credentialsId: 'github-pat', url: 'https://github.com/aftabshaikh10/travelbooking.git'
                     sh 'echo "Repository cloned successfully"'
                     sh 'ls -la'
                 }
