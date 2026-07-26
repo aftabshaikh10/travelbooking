@@ -81,7 +81,7 @@ backend "gcs" {
 Copy your GCP service account JSON key to the terraform directory and rename it to `keys.json`:
 
 ```bash
-cp /path/to/your/service-account.json /home/vijay/Desktop/travelbooking_app/gcp-terraform/keys.json
+cp /path/to/your/service-account.json /home/aftab/Desktop/travelbooking_app/gcp-terraform/keys.json
 ```
 
 ---
@@ -91,7 +91,7 @@ cp /path/to/your/service-account.json /home/vijay/Desktop/travelbooking_app/gcp-
 Before running any Terraform command, set this environment variable. Terraform's GCS backend (where state is stored) needs this to authenticate with your GCS bucket.
 
 ```bash
-echo 'export GOOGLE_APPLICATION_CREDENTIALS="/mnt/c/Users/vijay/OneDrive/Desktop/travelbooking/gcp-terraform/keys.json"' >> ~/.bashrc
+echo 'export GOOGLE_APPLICATION_CREDENTIALS="/mnt/c/Users/aftab/OneDrive/Desktop/travelbooking/gcp-terraform/keys.json"' >> ~/.bashrc
 source ~/.bashrc
 
 echo $GOOGLE_APPLICATION_CREDENTIALS
@@ -109,7 +109,7 @@ cat $GOOGLE_APPLICATION_CREDENTIALS | head -5
 Navigate to the terraform directory and initialize:
 
 ```bash
-cd /home/vijay/Desktop/travelbooking_app/gcp-terraform
+cd /home/aftab/Desktop/travelbooking_app/gcp-terraform
 terraform init
 ```
 
@@ -259,10 +259,10 @@ Then run `terraform destroy` again.
 
 ```bash
 # 1. Set credentials
-export GOOGLE_APPLICATION_CREDENTIALS=/home/vijay/Desktop/travelbooking_app/gcp-terraform/keys.json
+export GOOGLE_APPLICATION_CREDENTIALS=/home/aftab/Desktop/travelbooking_app/gcp-terraform/keys.json
 
 # 2. Go to terraform directory
-cd /home/vijay/Desktop/travelbooking_app/gcp-terraform
+cd /home/aftab/Desktop/travelbooking_app/gcp-terraform
 
 # 3. Initialize
 terraform init
