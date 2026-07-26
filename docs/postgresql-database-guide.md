@@ -95,7 +95,7 @@ kubectl exec -n travel-booking postgres-0 -- psql -U postgres -d userdb -c "SELE
 kubectl exec -n travel-booking postgres-0 -- psql -U postgres -d userdb -c "SELECT COUNT(*) AS total_users FROM users;"
 
 # Find a specific user by email
-kubectl exec -n travel-booking postgres-0 -- psql -U postgres -d userdb -c "SELECT id, name, email, role FROM users WHERE email = 'vijay@gmail.com';"
+kubectl exec -n travel-booking postgres-0 -- psql -U postgres -d userdb -c "SELECT id, name, email, role FROM users WHERE email = 'aftabshaikh1224@gmail.com.com';"
 
 # See users registered today
 kubectl exec -n travel-booking postgres-0 -- psql -U postgres -d userdb -c "SELECT id, name, email, created_at FROM users WHERE created_at::date = CURRENT_DATE;"
