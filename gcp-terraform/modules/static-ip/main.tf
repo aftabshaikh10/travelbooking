@@ -4,5 +4,7 @@
 resource "google_compute_global_address" "static-ip" {
   name        = var.name
   project     = var.project-id
+  address_type     = "EXTERNAL"
+  ip_version       = "IPV4"
   description = "Global static IP for TravelBooking Gateway load balancer"
 }
