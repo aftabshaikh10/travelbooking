@@ -493,7 +493,7 @@ curl -s -o /dev/null -w "Jenkins: HTTP %{http_code}\n" http://<DOMAIN_NAME>/jenk
 Open in browser: **`http://<DOMAIN_NAME>/jenkins`**
 
 Login with:
-- **Username:** `vijay`
+- **Username:** `aftab`
 - **Password:** `Aftab@135`
 
 ### Summary
