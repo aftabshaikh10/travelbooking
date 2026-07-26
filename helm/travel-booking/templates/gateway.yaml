@@ -4,7 +4,7 @@ metadata:
   name: travel-booking-gateway
   namespace: travel-booking
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: travel-booking-ip
+    kubernetes.io/ingress.global-static-ip-name:  gkequi-hi52-travel-booking-travel-booking-gateway-9poqovkayh2n
 spec:
   gatewayClassName: gke-l7-global-external-managed
   listeners:
