@@ -1,4 +1,7 @@
 controller:
+  image:
+    repository: "jenkins/jenkins"
+    tag: "2.504.3-jdk21"
   admin:
     username: "aftab"
     password: "Aftab@135"
