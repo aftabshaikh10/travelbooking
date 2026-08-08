@@ -1,19 +1,21 @@
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
+
 metadata:
   name: {{ .Values.gateway.name }}
   namespace: {{ .Values.namespace }}
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: {{ .Values.gateway.staticIPName }}
+
 spec:
   gatewayClassName: gke-l7-global-external-managed
+
   addresses:
-  - type: IPAddress
-    value: {{ .Values.gateway.staticIPAddress }}  # ← This pulls from values.yaml
+    - type: NamedAddress
+      value: {{ .Values.gateway.staticIPName }}
+
   listeners:
-  - name: http
-    port: 80
-    protocol: HTTP
-    allowedRoutes:
-      namespaces:
-        from: All
+    - name: http
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All
