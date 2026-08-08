@@ -81,7 +81,6 @@ gateway:
   name: travel-booking-gateway
   domain: cloudstech.online
   staticIPName: travel-booking-ip              # Reference to the static IP resource
-  staticIPAddress: 136.68.144.196              # The actual IP address
   certificateName: travel-booking-cert
 
 # ─── Secrets ──────────────────────────────────────────────────────────────────
