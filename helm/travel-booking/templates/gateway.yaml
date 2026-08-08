@@ -1,18 +1,20 @@
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
 metadata:
-  name: travel-booking-gateway
-  namespace: travel-booking
+  name: {{ .Values.gateway.name }}
+  namespace: {{ .Values.namespace }}
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: travel-booking-ip
+    kubernetes.io/ingress.global-static-ip-name: {{ .Values.gateway.staticIPName }}
 spec:
   gatewayClassName: gke-l7-global-external-managed
+  addresses:
+  - type: IPAddress
+    value: {{ .Values.gateway.staticIPAddress }}  # ← USE THE VALUE
   listeners:
-  # HTTP listener — accepts traffic only for your domain
   - name: http
     port: 80
     protocol: HTTP
-    hostname: cloudstech.online
+    hostname: {{ .Values.gateway.domain }}
     allowedRoutes:
       namespaces:
         from: All
