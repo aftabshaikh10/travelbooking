@@ -7,6 +7,9 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: {{ .Values.gateway.staticIPName }}
 spec:
   gatewayClassName: gke-l7-global-external-managed
+  addresses:
+  - type: IPAddress
+    value: {{ .Values.gateway.staticIPAddress }}  # ← This pulls from values.yaml
   listeners:
   - name: http
     port: 80
